@@ -1,111 +1,650 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ali Asiri Law Firm — Pilot</title>
-<style>
-:root{--n:#10243e;--b:#2463eb;--bg:#f4f7fb;--t:#172033;--m:#667085;--l:#e5e9f0;--r:#bd3434;--g:#167055}
-*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--bg);color:var(--t)}
-header{background:var(--n);color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:5}
-header small{display:block;color:#cbd5e1;margin-top:3px}.demo{font-size:12px;background:#ffffff18;padding:7px 10px;border-radius:20px}
-main{max-width:1150px;margin:auto;padding:16px}.search{background:#fff;border:1px solid var(--l);border-radius:15px;padding:12px 14px;display:flex;gap:8px}
-.search input{width:100%;border:0;outline:0;font-size:16px}.results{display:none;margin-top:8px}.results.on{display:grid;gap:7px}
-.tabs{display:flex;gap:7px;overflow:auto;padding:13px 0}.tabs button,.btn{border:1px solid var(--l);background:#fff;padding:9px 12px;border-radius:10px;white-space:nowrap;cursor:pointer}
-.tabs button.active,.btn.primary{background:var(--n);color:#fff;border-color:var(--n)}.view{display:none}.view.active{display:block}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.card,.row{background:#fff;border:1px solid var(--l);border-radius:14px;padding:14px}
-.metric span,.meta{font-size:13px;color:var(--m)}.metric strong{display:block;font-size:26px;margin-top:6px}.red{color:var(--r)!important}
-h2{font-size:18px;margin:18px 0 9px}.list{display:grid;gap:8px}.row{display:flex;justify-content:space-between;gap:10px;cursor:pointer}
-.tag{font-size:12px;background:#edf3ff;color:#2856a8;padding:5px 8px;border-radius:20px;height:max-content}.tag.warn{background:#fff0f0;color:#a92d2d}.tag.ok{background:#eaf8f2;color:var(--g)}
-.two{display:grid;grid-template-columns:1.3fr .7fr;gap:12px}table{width:100%;border-collapse:collapse}td,th{padding:9px;border-bottom:1px solid var(--l);text-align:right;font-size:14px}
-.note{background:#fff9e8;border:1px solid #f0dfaa;padding:10px 12px;border-radius:11px;font-size:13px}.timeline{border-right:2px solid #dce5f2;padding-right:17px;margin-right:7px}
-.event{margin:0 0 17px}.bubble{padding:11px 13px;border-radius:13px;margin:8px 0;line-height:1.7}.incoming{background:#f0f2f5}.suggest{background:#edf7ff;border:1px solid #cde5fa}
-.actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}.footer{text-align:center;color:var(--m);font-size:12px;padding:24px}
-@media(max-width:720px){main{padding:11px}.grid{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.metric strong{font-size:22px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MASAR Legal OS — نظام تشغيل مكتب المحاماة</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #fff;
+      --ink: #172033;
+      --muted: #6b7280;
+      --line: #e7eaf0;
+      --navy: #0d1b2a;
+      --blue: #1976d2;
+      --red: #c62828;
+      --green: #18864b;
+      --orange: #b86b00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Tahoma', 'Arial', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .app { display: flex; min-height: 100vh; }
+    .side {
+      width: 255px;
+      background: var(--navy);
+      color: #fff;
+      padding: 18px 14px;
+      position: fixed;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      overflow: auto;
+    }
+    .brand {
+      padding: 8px 10px 22px;
+      border-bottom: 1px solid #ffffff1c;
+      margin-bottom: 12px;
+    }
+    .brand b { font-size: 21px; }
+    .brand small { display: block; color: #9fb0c4; margin-top: 5px; }
+    .rolebox {
+      background: #ffffff10;
+      border: 1px solid #ffffff1c;
+      border-radius: 12px;
+      padding: 10px;
+      margin: 10px 0 16px;
+    }
+    .rolebox select {
+      width: 100%;
+      margin-top: 7px;
+      background: #15263a;
+      color: white;
+      border: 1px solid #ffffff2b;
+      border-radius: 8px;
+      padding: 8px;
+    }
+    .nav button {
+      display: flex;
+      width: 100%;
+      gap: 10px;
+      align-items: center;
+      background: transparent;
+      border: 0;
+      color: #c9d4e0;
+      padding: 11px 12px;
+      border-radius: 9px;
+      text-align: right;
+      margin: 2px 0;
+    }
+    .nav button:hover, .nav button.active {
+      background: #ffffff12;
+      color: #fff;
+    }
+    .badge {
+      margin-right: auto;
+      background: #b42318;
+      color: #fff;
+      border-radius: 20px;
+      padding: 2px 7px;
+      font-size: 11px;
+    }
+    .main {
+      margin-right: 255px;
+      width: calc(100% - 255px);
+      padding: 24px 28px;
+    }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .top h1 { margin: 0; font-size: 25px; }
+    .top p { margin: 5px 0; color: var(--muted); font-size: 13px; }
+    .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eef5ff;
+      color: #1657a7;
+      font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .grid { display: grid; gap: 14px; }
+    .g4 { grid-template-columns: repeat(4, 1fr); }
+    .g3 { grid-template-columns: repeat(3, 1fr); }
+    .g2 { grid-template-columns: repeat(2, 1fr); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 17px;
+      box-shadow: 0 2px 8px #0b18320a;
+    }
+    .metric { font-size: 28px; font-weight: 800; margin-top: 6px; }
+    .label { font-size: 12px; color: var(--muted); }
+    .section { margin-top: 18px; }
+    .section h2 { font-size: 17px; margin: 0 0 11px; }
+    .list { display: flex; flex-direction: column; gap: 9px; }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+    }
+    .title { font-weight: bold; font-size: 13px; }
+    .sub { color: var(--muted); font-size: 11px; margin-top: 4px; }
+    .status {
+      font-size: 11px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .s-red { background: #fff0f0; color: var(--red); }
+    .s-green { background: #ecf8f1; color: var(--green); }
+    .s-blue { background: #edf5ff; color: #1657a7; }
+    .s-orange { background: #fff5e7; color: var(--orange); }
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 13px;
+    }
+    .toolbar input, .toolbar select, .form input, .form select, .form textarea {
+      border: 1px solid #d9dee7;
+      background: #fff;
+      border-radius: 9px;
+      padding: 9px 10px;
+      outline: none;
+    }
+    .toolbar input { min-width: 260px; }
+    .btn {
+      border: 1px solid #d9dee7;
+      background: #fff;
+      border-radius: 9px;
+      padding: 9px 12px;
+    }
+    .btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .btn.green { background: var(--green); border-color: var(--green); color: #fff; }
+    .tablewrap {
+      overflow: auto;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .table { width: 100%; border-collapse: collapse; min-width: 850px; }
+    .table th, .table td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+      font-size: 12px;
+    }
+    .table th { background: #fafbfc; color: #5b6574; }
+    .table tr:hover td { background: #fbfdff; }
+    .link { color: #1264bd; font-weight: bold; cursor: pointer; }
+    .split { display: grid; grid-template-columns: 1.2fr .8fr; gap: 14px; }
+    .notice {
+      padding: 11px;
+      border-radius: 10px;
+      background: #f5f9ff;
+      border: 1px solid #dbeaff;
+      font-size: 12px;
+    }
+    .notice.warn { background: #fff8ec; border-color: #ffe2ad; }
+    .kpi { display: flex; align-items: center; justify-content: space-between; }
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: #07111f88;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 20;
+    }
+    .modal.show { display: flex; }
+    .modalbox {
+      background: #fff;
+      width: min(780px, 96vw);
+      max-height: 90vh;
+      overflow: auto;
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .modalhead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .close {
+      border: 0;
+      background: #f1f3f6;
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      font-size: 18px;
+    }
+    .timeline {
+      border-right: 2px solid #dbe5f0;
+      padding-right: 15px;
+    }
+    .event { margin: 0 0 16px; position: relative; }
+    .event:before {
+      content: "";
+      position: absolute;
+      right: -21px;
+      top: 4px;
+      width: 9px;
+      height: 9px;
+      background: #1976d2;
+      border-radius: 50%;
+    }
+    .event b { font-size: 12px; }
+    .event p { font-size: 11px; color: var(--muted); margin: 4px 0; }
+    .formgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .form label {
+      font-size: 11px;
+      color: #667085;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form input, .form select, .form textarea { width: 100%; }
+    .form textarea { min-height: 95px; }
+    .footer {
+      margin-top: 25px;
+      color: #8a93a2;
+      font-size: 10px;
+      text-align: center;
+    }
+    @media (max-width: 900px) {
+      .side { width: 75px; }
+      .side .brand span, .side small, .side .rolebox, .nav button span { display: none; }
+      .main { margin-right: 75px; width: calc(100% - 75px); padding: 16px; }
+      .g4 { grid-template-columns: repeat(2, 1fr); }
+      .g3, .g2, .split, .formgrid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-<header><div><b>علي عسيري للمحاماة</b><small>Ali Asiri Law Firm • Office Management Pilot</small></div><span class="demo">PILOT • بيانات تجريبية</span></header>
-<main>
-<div class="search">🔎 <input id="q" placeholder="ابحث باسم العميل، الشركة، رقم الجوال أو رقم القضية..."></div>
-<div id="results" class="results"></div>
-<nav class="tabs">
-<button class="active" onclick="show('dash',this)">الرئيسية</button>
-<button onclick="show('clients',this)">الموكلون</button>
-<button onclick="show('cases',this)">القضايا</button>
-<button onclick="show('inbox',this)">استفسارات العملاء</button>
-<button onclick="show('manager',this)">مدير المكتب</button><button onclick="show('import',this)">استيراد Excel</button>
-</nav>
+  <div class="app">
+    <aside class="side">
+      <div class="brand">
+        <b>MASAR <span>Legal OS</span></b>
+        <small>نظام تشغيل مكتب المحاماة</small>
+      </div>
+      <div class="rolebox">
+        <div style="font-size: 11px; color: #aebdce;">المستخدم الحالي</div>
+        <select id="roleSelect" onchange="setRole(this.value)">
+          <option value="manager">إدارة المكتب — عثمان (مالك)</option>
+          <option value="manager2">إدارة المكتب — علي (مدير)</option>
+          <option value="consultant">مستشار قانوني — زينب</option>
+          <option value="lawyer">محامية — حنان</option>
+        </select>
+      </div>
+      <div class="nav" id="nav"></div>
+    </aside>
+    <main class="main">
+      <div class="top">
+        <div>
+          <h1 id="pageTitle"></h1>
+          <p id="pageSub"></p>
+        </div>
+        <span class="pill">DEMO • بيانات اصطناعية</span>
+      </div>
+      <div id="content"></div>
+      <div class="footer">نموذج تجريبي — لا يمثل تكاملًا فعليًا مع ناجز أو WhatsApp API.</div>
+    </main>
+  </div>
+  <div class="modal" id="modal">
+    <div class="modalbox">
+      <div class="modalhead">
+        <h2 id="modalTitle" style="font-size:18px; margin:0"></h2>
+        <button class="close" onclick="closeModal()">×</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+  <script>
+    // ==================== البيانات التجريبية ====================
+    const cases = [
+      ['45192873', 'شركة الأفق للمقاولات', 'عمالية', 'عثمان حسن', 'قيد النظر', '2026-10-15', 'إعداد رد على مذكرة'],
+      ['78214019', 'شركة مدار التقنية', 'تجارية', 'زينب أسامة', 'قيد النظر', '2026-10-09', 'مراجعة العقد'],
+      ['66390112', 'شركة رواد الإمداد', 'تنفيذ', 'علي إبراهيم', 'تنفيذ', '2026-10-21', 'متابعة الطلب'],
+      ['41839027', 'شركة الشرقية للصيانة', 'عمالية', 'زينب أسامة', 'تحتاج تحديث', '2026-10-07', 'التواصل مع العميل'],
+      ['90217364', 'شركة نبراس للخدمات', 'عمالية', 'حنان', 'قيد النظر', '2026-10-13', 'متابعة قرار الدائرة'],
+      ['73628140', 'شركة روافد التجارية', 'تجارية', 'حنان', 'بانتظار مستند', '2026-10-18', 'استكمال الملف'],
+      ['51093427', 'شركة جسور الصناعية', 'عمالية', 'عثمان حسن', 'قيد النظر', '2026-10-22', 'مراجعة محضر الجلسة'],
+      ['67120935', 'شركة تمكين للمقاولات', 'تنفيذ', 'علي إبراهيم', 'قيد النظر', '2026-10-28', 'إشعار العميل']
+    ].map(x => ({ id: x[0], client: x[1], type: x[2], owner: x[3], status: x[4], hearing: x[5], next: x[6] }));
 
-<section id="dash" class="view active">
-<div class="grid">
-<div class="card metric"><span>القضايا التجريبية</span><strong>28</strong></div>
-<div class="card metric"><span>جلسات هذا الأسبوع</span><strong>4</strong></div>
-<div class="card metric"><span>مهام تحتاج إجراء</span><strong>7</strong></div>
-<div class="card metric"><span>استفسارات تنتظر الرد</span><strong class="red">6</strong></div>
-</div>
-<h2>عمل اليوم</h2><div class="list">
-<div class="row" onclick="openCase()"><div><b>10:30 ص — جلسة عمالية</b><div class="meta">شركة الأفق للمقاولات • القضية 45192873</div></div><span class="tag">جلسة</span></div>
-<div class="row"><div><b>إعداد مذكرة رد</b><div class="meta">شركة مدار التقنية • المسؤول: خالد • اليوم 2:00 م</div></div><span class="tag warn">مستحق اليوم</span></div>
-<div class="row" onclick="show('inbox')"><div><b>6 استفسارات تنتظر الرد</b><div class="meta">منها استفساران متعلقان بقضايا عمالية</div></div><span class="tag warn">متابعة</span></div>
-</div>
-<h2>تحتاج انتباه مدير المكتب</h2>
-<div class="card"><table><tr><th>الملف</th><th>المسؤول</th><th>الإجراء القادم</th><th>الحالة</th></tr>
-<tr><td>الأفق / عمالية</td><td>أحمد</td><td>تجهيز المستندات</td><td><span class="tag warn">متأخر</span></td></tr>
-<tr><td>مدار / تجارية</td><td>خالد</td><td>مذكرة رد</td><td><span class="tag">اليوم</span></td></tr></table></div>
-</section>
+    const clients = [
+      ['C-001', 'شركة الأفق للمقاولات', 'شركة', '+966 55 123 4401', 3, 'العربية'],
+      ['C-002', 'شركة مدار التقنية', 'شركة', '+966 54 220 1188', 2, 'العربية'],
+      ['C-003', 'شركة رواد الإمداد', 'شركة', '+966 56 904 3310', 1, 'English'],
+      ['C-004', 'شركة الشرقية للصيانة', 'شركة', '+966 50 771 2390', 2, 'العربية'],
+      ['C-005', 'شركة نبراس للخدمات', 'شركة', '+966 55 884 2001', 1, 'العربية']
+    ].map(x => ({ id: x[0], name: x[1], kind: x[2], phone: x[3], cases: x[4], lang: x[5] }));
 
-<section id="clients" class="view"><h2>الموكلون والشركات</h2>
-<div class="note">الشركة الواحدة يمكن أن ترتبط بعدة قضايا وجهات اتصال.</div><br>
-<div class="list">
-<div class="row" onclick="openCase()"><div><b>شركة الأفق للمقاولات</b><div class="meta">3 قضايا • 2 نشطة • جهة الاتصال: محمد السالم</div></div><span class="tag">شركة</span></div>
-<div class="row"><div><b>شركة مدار التقنية</b><div class="meta">2 قضية • 1 نشطة • جهة الاتصال: فهد العتيبي</div></div><span class="tag">شركة</span></div>
-<div class="row"><div><b>عبدالله القحطاني</b><div class="meta">قضية واحدة • عمالية</div></div><span class="tag">فرد</span></div>
-</div></section>
+    const requests = [
+      ['REQ-00142', 'شركة الأفق للمقاولات', '45192873', 'استفسار عن حالة القضية', 'عثمان حسن', '14:32', 'بانتظار رد المحامي', 'العربية', 'السلام عليكم، وش صار في القضية ومتى الجلسة القادمة؟'],
+      ['REQ-00143', 'شركة مدار التقنية', '78214019', 'طلب مستند', 'زينب أسامة', '16:00', 'معلومات مكتملة', 'العربية', 'نحتاج نسخة من آخر مذكرة ومحضر الجلسة.'],
+      ['REQ-00144', 'شركة روافد التجارية', '73628140', 'استفسار عن مستندات', 'حنان', '17:30', 'بانتظار العميل', 'العربية', 'هل تم استلام العقد والمرفقات؟'],
+      ['REQ-00145', 'New Client', '—', 'استشارة قانونية', 'مراجعة الإدارة', 'غدًا 10:00', 'طلب جديد', 'English', 'We need a legal consultation regarding an employment dispute.']
+    ].map(x => ({ id: x[0], client: x[1], case: x[2], type: x[3], owner: x[4], sla: x[5], status: x[6], lang: x[7], msg: x[8] }));
 
-<section id="cases" class="view"><h2>القضايا</h2><div class="list">
-<div class="row" onclick="openCase()"><div><b>45192873 — مطالبة عمالية</b><div class="meta">شركة الأفق للمقاولات • أحمد • الجلسة القادمة 05/10/2026</div></div><span class="tag ok">قيد النظر</span></div>
-<div class="row"><div><b>78214019 — نزاع تجاري</b><div class="meta">شركة مدار التقنية • خالد • الإجراء القادم: مذكرة رد</div></div><span class="tag">نشطة</span></div>
-<div class="row"><div><b>66390112 — تنفيذ</b><div class="meta">شركة رواد الإمداد • سارة</div></div><span class="tag">متابعة</span></div>
-</div></section>
+    const tasks = [
+      ['إعداد رد على مذكرة — 45192873', 'عثمان حسن', 'اليوم', 'عاجلة'],
+      ['مراجعة عقد — 78214019', 'زينب أسامة', 'غدًا', 'مفتوحة'],
+      ['التواصل مع العميل — 41839027', 'زينب أسامة', 'اليوم', 'متأخرة'],
+      ['متابعة قرار الدائرة — 90217364', 'حنان', '05 أكتوبر', 'مفتوحة'],
+      ['رفع مستندات — 73628140', 'حنان', 'اليوم', 'مفتوحة']
+    ].map(x => ({ title: x[0], owner: x[1], due: x[2], status: x[3] }));
 
-<section id="case" class="view">
-<div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div><div class="meta">شركة الأفق للمقاولات</div><h2 style="margin:4px 0">القضية 45192873 — مطالبة عمالية</h2><span class="tag ok">قيد النظر</span></div><button class="btn" onclick="show('cases')">رجوع</button></div>
-<div class="two" style="margin-top:13px">
-<div class="card"><h2 style="margin-top:0">ملخص القضية</h2><table>
-<tr><td>المحامي المسؤول</td><td><b>أحمد</b></td></tr><tr><td>المحكمة</td><td>المحكمة العمالية</td></tr>
-<tr><td>آخر إجراء</td><td>جلسة وتقديم مذكرة الرد</td></tr><tr><td>الإجراء القادم</td><td><b>تجهيز المستندات المطلوبة</b></td></tr>
-<tr><td>الجلسة القادمة</td><td>05/10/2026 — 10:30 ص</td></tr></table>
-<div class="note"><b>ناجز — Tracking:</b> آخر مراجعة مسجلة يدويًا 29/09/2026. لا توجد مزامنة آلية في هذا الـPilot.</div><h2>سجل القضية</h2><div class="timeline"><div class="event"><b>22/09/2026 — جلسة</b><div class="meta">تم تقديم مذكرة الرد، وطلبت الدائرة مستندات إضافية.</div></div>
-<div class="event"><b>18/09/2026 — مستند</b><div class="meta">رفع مذكرة الرد النهائية.</div></div><div class="event"><b>14/09/2026 — مهمة</b><div class="meta">كُلّف أحمد بإعداد المذكرة.</div></div></div></div>
-<div><div class="card"><h2 style="margin-top:0">الإجراء التالي</h2><b>تجهيز المستندات المطلوبة</b><div class="meta">المسؤول: أحمد<br>الاستحقاق: 29/09/2026</div>
-<div class="actions"><button class="btn primary">تحديث الحالة</button><button class="btn">إضافة مهمة</button></div></div>
-<div class="card" style="margin-top:10px"><h2 style="margin-top:0">المستندات</h2>📄 مذكرة الرد النهائية.pdf<div class="meta">22/09/2026</div><hr style="border:0;border-top:1px solid var(--l)">📄 عقد العمل.pdf<div class="meta">02/09/2026</div></div></div>
-</div></section>
+    const roles = {
+      manager: { name: 'عثمان', label: 'إدارة المكتب', full: true },
+      manager2: { name: 'علي', label: 'إدارة المكتب', full: true },
+      consultant: { name: 'زينب', label: 'مستشار قانوني', full: false },
+      lawyer: { name: 'حنان', label: 'محامية', full: false }
+    };
 
-<section id="inbox" class="view"><h2>استفسارات العملاء — Client Desk</h2><div class="two">
-<div class="card"><div class="meta">محمد السالم • شركة الأفق • WhatsApp • العربية</div>
-<div class="bubble incoming">السلام عليكم، ممكن أعرف ماذا حدث في القضية العمالية ومتى الجلسة القادمة؟</div>
-<div class="note">تم التعرف على العميل والقضية • التصنيف: متابعة قضية • المسؤول: أحمد</div>
-<div class="bubble suggest"><b>رد مقترح للمراجعة:</b><br>وعليكم السلام أستاذ محمد. آخر تحديث مسجل لدينا هو جلسة 22 سبتمبر، وتم خلالها تقديم مذكرة الرد وطلب مستندات إضافية. الجلسة القادمة مسجلة بتاريخ 5 أكتوبر الساعة 10:30 صباحًا. سأحوّل استفسارك أيضًا للمحامي المسؤول للتأكد من عدم وجود تحديث إضافي.</div>
-<div class="actions"><button class="btn primary">اعتماد وإرسال</button><button class="btn">تحويل لأحمد</button><button class="btn" onclick="openCase()">فتح القضية</button></div></div>
-<div class="card"><h2 style="margin-top:0">قائمة الانتظار</h2><div class="list">
-<div class="row"><div><b>محمد السالم</b><div class="meta">متابعة قضية • العربية</div></div><span class="tag warn">جديد</span></div>
-<div class="row"><div><b>Fahad Alotaibi</b><div class="meta">Invoice inquiry • English</div></div><span class="tag">المحاسب</span></div>
-<div class="row"><div><b>سلمان الحربي</b><div class="meta">طلب استشارة • العربية</div></div><span class="tag">المستشار</span></div>
-</div></div></div></section>
+    // ==================== الحالة العامة ====================
+    let current = 'manager';
+    let view = 'dashboard';
 
-<section id="manager" class="view"><h2>لوحة مدير المكتب</h2>
-<div class="note">تحويل متابعة Excel الحالية إلى لوحة عمل لحظية، مع الاستيراد والتصدير لاحقًا.</div><br>
-<div class="grid"><div class="card metric"><span>كل الملفات</span><strong>27</strong></div><div class="card metric"><span>تحت الإجراء</span><strong>18</strong></div><div class="card metric"><span>مهام متأخرة</span><strong class="red">3</strong></div><div class="card metric"><span>بانتظار العميل</span><strong>4</strong></div></div>
-<h2>توزيع العمل</h2><div class="card"><table><tr><th>المحامي</th><th>قضايا نشطة</th><th>مهام مفتوحة</th><th>متأخرة</th></tr>
-<tr><td>عثمان حسن</td><td>10</td><td>4</td><td>1</td></tr><tr><td>علي إبراهيم</td><td>9</td><td>5</td><td>2</td></tr><tr><td>زينب أسامة</td><td>9</td><td>3</td><td>0</td></tr></table>
-<div class="actions"><button class="btn primary">+ توزيع مهمة</button><button class="btn">استيراد Excel</button><button class="btn">تصدير التقرير الشهري</button></div></div></section>
-<section id="import" class="view"><h2>استيراد ملف Excel الشهري</h2><div class="card"><p><b>محاكاة الانتقال من الطريقة الحالية إلى النظام.</b></p><p class="meta">ارفع ملفًا بسيطًا من بيانات العميل والقضية. في النسخة الفعلية سنطابق الأعمدة ثم نضيف المسؤول وآخر إجراء والإجراء التالي.</p><input type="file" accept=".csv,.xlsx"><div class="actions"><button class="btn primary" onclick="alert('تمت محاكاة الاستيراد: 10 سجلات، 10 قضايا، 0 أخطاء. الخطوة التالية: تعيين المسؤولين.')">محاكاة الاستيراد</button></div></div></section><div class="footer">جميع الأسماء والأرقام والبيانات وهمية لأغراض العرض.</div>
-</main>
-<script>
-function show(id,btn){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');window.scrollTo(0,0)}
-function openCase(){show('case')}
-const q=document.getElementById('q'),r=document.getElementById('results');
-const items=[['شركة الأفق للمقاولات','45192873 • مطالبة عمالية • محمد السالم • 0551234567'],['محمد السالم','جهة اتصال • شركة الأفق • القضية 45192873'],['45192873','مطالبة عمالية • شركة الأفق للمقاولات']];
-q.addEventListener('input',()=>{let v=q.value.trim();r.innerHTML='';if(!v){r.classList.remove('on');return}let hits=items.filter(x=>(x[0]+' '+x[1]).includes(v));r.classList.add('on');r.innerHTML=hits.length?hits.map(x=>`<div class="row" onclick="openCase()"><div><b>${x[0]}</b><div class="meta">${x[1]}</div></div><span class="tag">فتح</span></div>`).join(''):'<div class="card meta">لا توجد نتيجة في بيانات العرض.</div>'});
-</script></body></html>
+    // ==================== الدوال الأساسية ====================
+    function setRole(r) {
+      current = r;
+      view = 'dashboard';
+      render();
+    }
+
+    function full() {
+      return roles[current].full;
+    }
+
+    function allowed() {
+      if (full()) return cases;
+      if (current === 'consultant') return cases.filter(c => c.owner.includes('زينب'));
+      return cases.filter(c => c.owner === 'حنان');
+    }
+
+    function navItems() {
+      let a = [
+        ['dashboard', '▦', 'لوحة التشغيل'],
+        ['requests', '◉', 'طلبات العملاء', requests.length],
+        ['cases', '▤', 'القضايا'],
+        ['clients', '♙', 'العملاء'],
+        ['tasks', '✓', 'المهام والمهل'],
+        ['hearings', '◷', 'الجلسات']
+      ];
+      if (full()) a.push(['users', '⚿', 'المستخدمون والصلاحيات'], ['audit', '≡', 'سجل التدقيق']);
+      return a;
+    }
+
+    function renderNav() {
+      document.getElementById('nav').innerHTML = navItems().map(x =>
+        `<button class="${view === x[0] ? 'active' : ''}" onclick="go('${x[0]}')">
+          <span>${x[1]}</span><span>${x[2]}</span>
+          ${x[3] ? `<span class="badge">${x[3]}</span>` : ''}
+        </button>`
+      ).join('');
+    }
+
+    function go(v) {
+      view = v;
+      render();
+    }
+
+    function render() {
+      renderNav();
+      document.getElementById('roleSelect').value = current;
+      const titles = {
+        dashboard: 'لوحة إدارة المكتب',
+        requests: 'Client Desk — طلبات العملاء',
+        cases: 'القضايا',
+        clients: 'العملاء',
+        tasks: 'المهام والمهل',
+        hearings: 'الجلسات',
+        users: 'المستخدمون والصلاحيات',
+        audit: 'سجل التدقيق'
+      };
+      document.getElementById('pageTitle').textContent = titles[view];
+      document.getElementById('pageSub').textContent =
+        `${roles[current].label} • ${roles[current].name} — بيانات تجريبية`;
+
+      const pages = {
+        dashboard, requests: requestsPage, cases: casesPage,
+        clients: clientsPage, tasks: tasksPage, hearings: hearingsPage,
+        users: usersPage, audit: auditPage
+      };
+      document.getElementById('content').innerHTML = pages[view]();
+    }
+
+    // ==================== لوحة التحكم ====================
+    function dashboard() {
+      let cs = allowed();
+      let rs = full() ? requests : requests.filter(r =>
+        r.owner.includes(roles[current].name) || r.owner === 'مراجعة الإدارة');
+      let ts = full() ? tasks : tasks.filter(t => t.owner.includes(roles[current].name));
+
+      return `
+        <div class="grid g4">
+          <div class="card"><div class="label">القضايا النشطة</div><div class="metric">${cs.length}</div><div class="label">ضمن نطاق المستخدم</div></div>
+          <div class="card"><div class="label">طلبات العملاء</div><div class="metric">${rs.length}</div><div class="label">تحتاج متابعة</div></div>
+          <div class="card"><div class="label">مهام اليوم</div><div class="metric">${ts.length}</div><div class="label">مفتوحة / عاجلة</div></div>
+          <div class="card"><div class="label">جلسات قادمة</div><div class="metric">${cs.length + 3}</div><div class="label">تقويم تجريبي</div></div>
+        </div>
+        <div class="section">
+          <h2>يحتاج انتباهك اليوم</h2>
+          <div class="grid g3">
+            <div class="card">
+              <div class="kpi"><b>طلبات WhatsApp</b><span class="status s-red">3 تنتظر الرد</span></div>
+              <p class="label">الرسائل تتحول إلى Requests قابلة للإسناد والمتابعة.</p>
+              <button class="btn primary" onclick="go('requests')">فتح Client Desk</button>
+            </div>
+            <div class="card">
+              <div class="kpi"><b>مهل ومهام</b><span class="status s-orange">2 عاجلة</span></div>
+              <p class="label">المواعيد والمهام المرتبطة بالقضايا.</p>
+              <button class="btn" onclick="go('tasks')">عرض المهام</button>
+            </div>
+            <div class="card">
+              <div class="kpi"><b>قضايا تحتاج تحديث</b><span class="status s-blue">4</span></div>
+              <p class="label">رصد القضايا التي تحتاج Next Action.</p>
+              <button class="btn" onclick="go('cases')">فتح القضايا</button>
+            </div>
+          </div>
+        </div>
+        <div class="section split">
+          <div class="card">
+            <h2>آخر طلبات العملاء</h2>
+            <div class="list">${rs.slice(0, 4).map(requestRow).join('')}</div>
+          </div>
+          <div class="card">
+            <h2>التشغيل السريع</h2>
+            <div class="list">
+              <button class="row" onclick="newRequest()"><div><div class="title">＋ إنشاء طلب عميل</div><div class="sub">محاكاة استقبال WhatsApp / اتصال</div></div><b>←</b></button>
+              <button class="row" onclick="newCase()"><div><div class="title">＋ فتح قضية جديدة</div><div class="sub">عميل ← تعارض ← إسناد ← قضية</div></div><b>←</b></button>
+              <button class="row" onclick="go('audit')"><div><div class="title">سجل التدقيق</div><div class="sub">من فعل ماذا ومتى</div></div><b>←</b></button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function requestRow(r) {
+      return `<div class="row" onclick="requestDetail('${r.id}')">
+        <div><div class="title">${r.id} — ${r.type}</div>
+        <div class="sub">${r.client} • ${r.lang} • ${r.msg}</div></div>
+        <span class="status ${r.status.includes('بانتظار') ? 's-orange' : 's-blue'}">${r.status}</span>
+      </div>`;
+    }
+
+    // ==================== الصفحات ====================
+    function requestsPage() {
+      let rs = full() ? requests : requests.filter(r =>
+        r.owner.includes(roles[current].name) || r.owner === 'مراجعة الإدارة');
+      return `
+        <div class="toolbar">
+          <input id="rqSearch" placeholder="بحث بالعميل أو رقم الطلب..." oninput="filterRequests()">
+          <button class="btn primary" onclick="newRequest()">＋ طلب جديد</button>
+          <select><option>كل الحالات</option><option>بانتظار الرد</option><option>معلومات مكتملة</option></select>
+        </div>
+        <div class="tablewrap">
+          <table class="table">
+            <thead><tr><th>الطلب</th><th>العميل</th><th>التصنيف</th><th>المسؤول</th><th>SLA</th><th>اللغة</th><th>الحالة</th></tr></thead>
+            <tbody id="rqBody">${rs.map(r => `
+              <tr onclick="requestDetail('${r.id}')">
+                <td class="link">${r.id}</td><td>${r.client}</td><td>${r.type}</td>
+                <td>${r.owner}</td><td>${r.sla}</td><td>${r.lang}</td>
+                <td><span class="status ${r.status.includes('بانتظار') ? 's-orange' : 's-green'}">${r.status}</span></td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+    }
+
+    function filterRequests() {
+      let q = document.getElementById('rqSearch').value.toLowerCase();
+      document.querySelectorAll('#rqBody tr').forEach(tr =>
+        tr.style.display = tr.innerText.toLowerCase().includes(q) ? '' : 'none');
+    }
+
+    function casesPage() {
+      return `
+        <div class="toolbar">
+          <input placeholder="بحث بالعميل أو رقم القضية..." oninput="filterTable(this,'.caseRow')">
+          <button class="btn primary" onclick="newCase()">＋ قضية جديدة</button>
+        </div>
+        <div class="tablewrap">
+          <table class="table">
+            <thead><tr><th>رقم القضية</th><th>العميل</th><th>النوع</th><th>المسؤول</th><th>الحالة</th><th>الجلسة القادمة</th><th>Next Action</th></tr></thead>
+            <tbody>${allowed().map(c => `
+              <tr class="caseRow" onclick="caseDetail('${c.id}')">
+                <td class="link">${c.id}</td><td>${c.client}</td><td>${c.type}</td>
+                <td>${c.owner}</td>
+                <td><span class="status ${c.status === 'تحتاج تحديث' ? 's-orange' : 's-blue'}">${c.status}</span></td>
+                <td>${c.hearing}</td><td>${c.next}</td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+    }
+
+    function filterTable(i, s) {
+      let q = i.value.toLowerCase();
+      document.querySelectorAll(s).forEach(tr =>
+        tr.style.display = tr.innerText.toLowerCase().includes(q) ? '' : 'none');
+    }
+
+    function clientsPage() {
+      return `
+        <div class="toolbar">
+          <input placeholder="بحث عن عميل..." oninput="filterTable(this,'.clientRow')">
+          <button class="btn primary" onclick="newClient()">＋ عميل جديد</button>
+        </div>
+        <div class="tablewrap">
+          <table class="table">
+            <thead><tr><th>العميل</th><th>النوع</th><th>الهاتف</th><th>القضايا</th><th>اللغة</th><th></th></tr></thead>
+            <tbody>${clients.map(c => `
+              <tr class="clientRow">
+                <td><b>${c.name}</b></td><td>${c.kind}</td><td>${c.phone}</td>
+                <td>${c.cases}</td><td>${c.lang}</td>
+                <td><button class="btn" onclick="clientDetail('${c.id}')">فتح الملف</button></td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+    }
+
+    function tasksPage() {
+      let ts = full() ? tasks : tasks.filter(t => t.owner.includes(roles[current].name));
+      return `
+        <div class="toolbar">
+          <button class="btn primary">＋ مهمة جديدة</button>
+          <span class="pill">المتأخر: ${ts.filter(t => t.status === 'متأخرة').length}</span>
+        </div>
+        <div class="grid g2">${ts.map(t => `
+          <div class="card">
+            <div class="kpi"><b>${t.title}</b>
+              <span class="status ${t.status === 'متأخرة' ? 's-red' : t.status === 'عاجلة' ? 's-orange' : 's-blue'}">${t.status}</span>
+            </div>
+            <p class="label">المسؤول: ${t.owner} • الاستحقاق: ${t.due}</p>
+            <button class="btn">فتح المهمة</button>
+          </div>`).join('')}
+        </div>`;
+    }
+
+    function hearingsPage() {
+      return `
+        <div class="notice">الجلسات هنا طبقة متابعة تشغيلية. لا يوجد في هذا الديمو تكامل مباشر مع ناجز.</div>
+        <div class="section">
+          <div class="tablewrap">
+            <table class="table">
+              <thead><tr><th>التاريخ</th><th>القضية</th><th>العميل</th><th>النوع</th><th>المسؤول</th><th>التذكير</th></tr></thead>
+              <tbody>${allowed().sort((a, b) => a.hearing.localeCompare(b.hearing)).map(c => `
+                <tr>
+                  <td>${c.hearing}</td>
+                  <td class="link" onclick="caseDetail('${c.id}')">${c.id}</td>
+                  <td>${c.client}</td><td>${c.type}</td><td>${c.owner}</td><td>24 ساعة</td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>`;
+    }
+
+    function usersPage() {
+      return `
+        <div class="grid g3">
+          <div class="card"><b>إدارة المكتب</b><p class="label">صلاحية كاملة + المستخدمون + التقارير + السجل.</p><span class="status s-green">2 مستخدمين</span></div>
+          <div class="card"><b>مستشار قانوني</b><p class="label">القضايا ذات الصلة + الطلبات المسندة.</p><span class="status s-blue">1 مستخدم</span></div>
+          <div class="card"><b>محامٍ</b><p class="label">القضايا والمهام المسندة والتواصل المرتبط بها.</p><span class="status s-blue">1 مستخدم</span></div>
+        </div>
+        <div class="section card">
+          <h2>مصفوفة صلاحيات مختصرة</h2>
+          <table class="table">
+            <tr><th>الوحدة</th><th>إدارة المكتب</th><th>مستشار</th><th>محامٍ</th></tr>
+            <tr><td>القضايا</td><td>كل القضايا</td><td>ذات الصلة</td><td>المسندة</td></tr>
+            <tr><td>طلبات العملاء</td><td>كل الطلبات</td><td>المسندة</td><td>المسندة</td></tr>
+            <tr><td>المستخدمون</td><td>إدارة</td><td>قراءة محدودة</td><td>لا</td></tr>
+            <tr><td>سجل التدقيق</td><td>كامل</td><td>محدود</td><td>محدود</td></tr>
+          </table>
+        </div>`;
+    }
+
+    function auditPage() {
+      return `
+        <div class="notice">كل عملية حساسة تسجل: المستخدم، العملية، الكيان، الوقت. هذا الديمو يحاكي السجل ولا ينفذ تخزينًا خلفيًا.</div>
+        <div class="section list">
+          ${[
+            ['10:03', 'علي', 'Changed Responsible Lawyer', 'CASE-45192873'],
+            ['09:47', 'حنان', 'Downloaded Document', 'CASE-73628140'],
+            ['09:42', 'عثمان', 'Viewed Case', 'CASE-45192873'],
+            ['09:31', 'النظام', 'Created Request', 'REQ-00145'],
+            ['09:29', 'النظام', 'Detected language: English', 'REQ-00145']
+          ].map(x => `
+            <div class="row">
+              <div><div class="title">${x[0]} — ${x[1]} — ${x[2]}</div><div class="sub">${x[3]}</div></div>
+              <span class="status s-blue">AUDIT</span>
+            </div>`).join('')}
+        </div>`;
+    }
+
+    // ==================== النوافذ المنبثقة ====================
+    function modal(t, b) {
+      document.getElementById('modalTitle').textContent = t;
+      document.getElementById('modalBody').innerHTML = b;
+      document.getElementById('modal').classList.add('show');
+    }
+    function closeModal() {
+      document.getElementById('modal').classList.remove('show');
+    }
+
+    function caseDetail(id) {
+      let c = cases.find(x => x.id === id);
+      modal('القضية ' + id, `
+        <div class="grid g2">
